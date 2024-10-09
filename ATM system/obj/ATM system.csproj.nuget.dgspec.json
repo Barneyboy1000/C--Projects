@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\ATM system.csproj": {}
+    "c:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\ATM system.csproj": {}
   },
   "projects": {
-    "C:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\ATM system.csproj": {
+    "c:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\ATM system.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\ATM system.csproj",
+        "projectUniqueName": "c:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\ATM system.csproj",
         "projectName": "ATM system",
-        "projectPath": "C:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\ATM system.csproj",
+        "projectPath": "c:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\ATM system.csproj",
         "packagesPath": "C:\\Users\\archb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\obj\\",
+        "outputPath": "c:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
