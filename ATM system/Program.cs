@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Reflection;
+using System.Diagnostics;
 internal class Program
 {
     private static void Main(string[] args)
@@ -12,7 +14,7 @@ internal class Program
         string? inputPIN = Console.ReadLine();
         if(string.IsNullOrWhiteSpace(inputPIN)){
             Console.WriteLine("Oops, nothing was written");
-            Environment.Exit(0);
+            ApplicationRestart();
         }
 
         if(inputPIN == "PIN"){
@@ -22,7 +24,7 @@ internal class Program
             var newPIN = Console.ReadLine();
             if(string.IsNullOrWhiteSpace(newPIN)){
                 Console.WriteLine("Nothing was set");
-                Environment.Exit(0);
+                ApplicationRestart();
             }
         }
 
@@ -34,6 +36,16 @@ internal class Program
             Console.WriteLine("You have £50 in your account");
         }else{
             Console.WriteLine("PIN is invalid");
+            ApplicationRestart();
         }
+
+        Environment.Exit(0);
+    }
+
+    private static void ApplicationRestart(){
+        Console.WriteLine("Please try again... Restarting");
+        Thread.Sleep(1000);
+        string[] strings = [];
+        Main(strings);
     }
 }
