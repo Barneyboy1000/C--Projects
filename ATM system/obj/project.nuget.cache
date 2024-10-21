@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "UQvhmrwTXtU=",
+  "dgSpecHash": "1twYsw6BR2U=",
   "success": true,
   "projectFilePath": "c:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\ATM system.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\archb\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512"
+  ],
   "logs": []
 }
