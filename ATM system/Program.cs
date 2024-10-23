@@ -6,12 +6,12 @@ internal class Program
     private static void Main(string[]? args)
     {
         // Read dummy file of PINs for comparison
-        var path = "C:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\PINData.csv";
+        PINClass.SetCsvPath("C:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\PINData.csv");
 
         Console.WriteLine("Welcome, please enter PIN to get started! Or write PIN to set up a new PIN");
 
         // Reading the PIN values from the file of absolute path
-        List<string> pinsToStringList = PINClass.PinAccess(path);
+        List<string> pinsToStringList = PINClass.PinAccess();
 
         // User should only be given 3 attempts to input pin
         int count = 0;
@@ -34,12 +34,20 @@ internal class Program
                     Console.WriteLine("Nothing was set");
                     ApplicationRestart();
                 }
+                
+                // TODO add new pin
                 break;
             }
 
             // PIN is valid if in list, null is already checked
             if(pinsToStringList.Contains(inputPIN)){
+                int associatedFunds = PINClass.GetFundsFromPin(inputPIN);
+                Console.WriteLine(@$"Welcome to your accout, 
+                                  you balance is {associatedFunds},
+                                  enter deposit amount,
+                                  This Machine Holds £50, £20, £10 and £5 notes");
                 break;
+                
             }else{
                 Console.WriteLine("PIN is invalid");
                 count += 1;
@@ -51,10 +59,6 @@ internal class Program
             ApplicationRestart();
         }
 
-        // TODO add new pin
-
-        // TODO PIN Valid
-
         // Prevent infinite recursive loop
         Environment.Exit(0);
     }
@@ -64,5 +68,24 @@ internal class Program
         Console.WriteLine("Please try again... Restarting");
         Thread.Sleep(1000);
         Main(null);
+    }
+
+    // Small Algorithm to determine how many notes are needed for an input
+    // Returns a neat string of the notes dispensing
+    public static string CashExchange(int amountToDispense){
+        int[] notesArray = [50, 20, 10, 5];
+        string output = "Dispensing :";
+        
+        foreach(int notes in notesArray){
+            int currentNote = amountToDispense/notes;
+            if(currentNote > 0){
+                output += $" {currentNote} £{notes}s";
+            }else{
+                continue;
+            }
+            amountToDispense -= currentNote*notes;
+        }
+
+        return output;
     }
 }
