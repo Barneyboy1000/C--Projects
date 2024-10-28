@@ -5,12 +5,12 @@ internal class Program
 {
     private static void Main(string[]? args)
     {
-        // Read dummy file of PINs for comparison
-        PINClass.SetCsvPath("C:\\Users\\archb\\OneDrive\\Documents\\C# Projects\\ATM system\\PINData.csv");
+        // Read data file of PINs from a relative path
+        PINClass.SetCsvPath(@"..\..\..\PINData.csv");
 
         Console.WriteLine("Welcome, please enter PIN to get started! Or write PIN to set up a new PIN");
 
-        // Reading the PIN values from the file of absolute path
+        // Reading the PIN values from csv file
         List<string> pinsToStringList = PINClass.PinAccess();
 
         // User should only be given 3 attempts to input pin
