@@ -2,7 +2,9 @@
 using System.Reflection;
 using System.Diagnostics;
 using System.Reflection.Metadata;
-internal class Program
+using System.ComponentModel;
+using System.Text.RegularExpressions;
+internal partial class Program
 {
     private static void Main(string[]? args)
     {
@@ -18,10 +20,10 @@ internal class Program
         int count = 0;
         while(count < 3)
         {
-            // check for null values
-            string? inputPIN = Console.ReadLine();
-            if(string.IsNullOrWhiteSpace(inputPIN)){
-                Console.WriteLine("Oops, nothing was written");
+            // check for null values and PIN format
+            var inputPIN = Console.ReadLine();
+            if(string.IsNullOrWhiteSpace(inputPIN) || !PINRegex().IsMatch(inputPIN)){
+                Console.WriteLine("Oops, nothing was written or not 4 digits for a pin");
                 ApplicationRestart();
             }
 
@@ -29,27 +31,35 @@ internal class Program
             if(inputPIN == "PIN"){
                 Console.WriteLine("Please enter your new PIN");
             
-                // New Pin can't be empty
+                // New Pin can't be empty or not a PIN Format
                 var newPIN = Console.ReadLine();
-                if(string.IsNullOrWhiteSpace(newPIN)){
-                    Console.WriteLine("Nothing was set");
+                if(string.IsNullOrWhiteSpace(newPIN)|| !PINRegex().IsMatch(newPIN)){
+                    Console.WriteLine("Nothing was set or doesn't match a 4 digit pin");
                     ApplicationRestart();
                 }
                 
                 // TODO add new pin
-                break;
+                if(PINClass.PinExists(newPIN)){
+                    Console.WriteLine("PIN already exists");
+                    ApplicationRestart();
+                }else{
+                    PINClass.AddPin(newPIN);
+                    Console.WriteLine("new PIN added");
+                    break;
+                }
             }
 
             // PIN is valid if in list, null is already checked
             if(pinsToStringList.Contains(inputPIN)){
                 int associatedFunds = PINClass.GetFundsFromPin(inputPIN);
                 Console.WriteLine("Welcome to your accout,\n"+ 
-                                  $"you balance is {associatedFunds},\n"+
-                                  "enter deposit amount\n,"+
+                                  $"you balance is £{associatedFunds},\n"+
+                                  "enter deposit amount,\n"+
                                   "This Machine Holds £50, £20, £10 and £5 notes");
                 var moneyToDispense = Console.ReadLine();
                 if(string.IsNullOrWhiteSpace(moneyToDispense) || Convert.ToInt16(moneyToDispense) < 0){
                     Console.WriteLine("Invalid input, needs to be a positive number");
+                    ApplicationRestart();
                 }else{
                     Console.WriteLine(CashExchange(Convert.ToInt16(moneyToDispense)));
                     break;
@@ -95,4 +105,7 @@ internal class Program
 
         return output;
     }
+
+    [GeneratedRegex("^[0-9]{4}$")]
+    private static partial Regex PINRegex();
 }

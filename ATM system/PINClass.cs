@@ -4,8 +4,6 @@ using System.Globalization;
 
 class PINClass{
     public static string Path {get; set;}
-    public string Pin {get; set;}
-    public int Funds {get; set;}
 
     public static void SetCsvPath(string path){
         Path = path;
@@ -33,9 +31,9 @@ class PINClass{
         };
         using StreamReader streamReader = new(Path);
         using CsvReader csvReader = new(streamReader, config);
-        IEnumerable<PINClass> records = csvReader.GetRecords<PINClass>();
+        IEnumerable<Account> records = csvReader.GetRecords<Account>();
 
-        foreach(PINClass pin in records){
+        foreach(Account pin in records){
             listOfStrings.Add(pin.Pin);
         }
 
@@ -50,9 +48,9 @@ class PINClass{
         };
         using StreamReader streamReader = new(Path);
         using CsvReader csvReader = new(streamReader, config);
-        IEnumerable<PINClass> records = csvReader.GetRecords<PINClass>();
+        IEnumerable<Account> records = csvReader.GetRecords<Account>();
 
-        foreach (PINClass pin in records)
+        foreach (Account pin in records)
         {
             if (pin.Pin == associatedPin)
             {
@@ -61,4 +59,40 @@ class PINClass{
         }
         return 0;
     }
+
+    public static void AddPin(string newPin){
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            HasHeaderRecord = false
+        };
+        using StreamWriter streamWriter = new(Path);
+        using CsvWriter csvWriter = new(streamWriter, config);
+
+        Account pinToAdd = new() { Pin = newPin, Funds = 0};
+
+        csvWriter.WriteRecord(pinToAdd);
+    }
+
+    public static bool PinExists(string pinToCheck){
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            HasHeaderRecord = false
+        };
+        using StreamReader streamReader = new(Path);
+        using CsvReader csvReader = new(streamReader, config);
+        IEnumerable<Account> records = csvReader.GetRecords<Account>();
+
+        foreach(Account pin in records){
+            if(pin.Pin == pinToCheck){
+                return true;
+            }
+        }
+
+        return false;
+    } 
+}
+
+class Account {
+    public string Pin {get; set;}
+    public int Funds {get; set;}
 }
