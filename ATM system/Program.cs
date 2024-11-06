@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 internal class Program
 {
     private static void Main(string[]? args)
@@ -42,11 +43,17 @@ internal class Program
             // PIN is valid if in list, null is already checked
             if(pinsToStringList.Contains(inputPIN)){
                 int associatedFunds = PINClass.GetFundsFromPin(inputPIN);
-                Console.WriteLine(@$"Welcome to your accout, 
-                                  you balance is {associatedFunds},
-                                  enter deposit amount,
-                                  This Machine Holds £50, £20, £10 and £5 notes");
-                break;
+                Console.WriteLine("Welcome to your accout,\n"+ 
+                                  $"you balance is {associatedFunds},\n"+
+                                  "enter deposit amount\n,"+
+                                  "This Machine Holds £50, £20, £10 and £5 notes");
+                var moneyToDispense = Console.ReadLine();
+                if(string.IsNullOrWhiteSpace(moneyToDispense) || Convert.ToInt16(moneyToDispense) < 0){
+                    Console.WriteLine("Invalid input, needs to be a positive number");
+                }else{
+                    Console.WriteLine(CashExchange(Convert.ToInt16(moneyToDispense)));
+                    break;
+                }
                 
             }else{
                 Console.WriteLine("PIN is invalid");
